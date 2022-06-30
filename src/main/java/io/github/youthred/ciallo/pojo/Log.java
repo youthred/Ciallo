@@ -12,6 +12,8 @@ import java.time.LocalDateTime;
 @Accessors(chain = true)
 public class Log {
 
+    private Long id;
+
     /**
      * 完全限定名
      */

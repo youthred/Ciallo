@@ -8,6 +8,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Component;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
@@ -22,6 +23,9 @@ public class CialloProp {
 
     @NotNull
     private boolean saveLog = true;
+
+    @NotBlank
+    private String logTableName = "T_CIALLO_LOG";
 
     @NestedConfigurationProperty
     @Valid
