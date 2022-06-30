@@ -11,5 +11,5 @@ import java.lang.annotation.*;
 public @interface Ciallo {
 
     String value() default "";
-    boolean requestMapping() default true;
+    boolean servlet() default true;
 }

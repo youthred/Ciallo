@@ -11,6 +11,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 
 /**
  * @author https://github.com/youthred
@@ -19,6 +20,7 @@ import org.springframework.context.annotation.Configuration;
 @EnableConfigurationProperties(CialloProp.class)
 @ConditionalOnProperty(value = "ciallo.enable", havingValue = "true")
 @Slf4j
+@Import(cn.hutool.extra.spring.SpringUtil.class)
 public class CialloConfiguration {
 
     @Bean

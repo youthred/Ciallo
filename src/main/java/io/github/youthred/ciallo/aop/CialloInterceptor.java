@@ -6,6 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author https://github.com/youthred
  */
@@ -15,8 +17,9 @@ public class CialloInterceptor implements MethodInterceptor {
     @Override
     public Object invoke(MethodInvocation methodInvocation) throws Throwable {
         Ciallo ciallo = methodInvocation.getMethod().getAnnotation(Ciallo.class);
-        if (ciallo.requestMapping()) {
-            String servletPath = ContextHolderUtil.getCurrentHttpServletRequest().getServletPath();
+        if (ciallo.servlet()) {
+            HttpServletRequest request = ContextHolderUtil.getCurrentHttpServletRequest();
+            String servletPath = request.getServletPath();
             log.info(servletPath);
         }
         return methodInvocation.proceed();
