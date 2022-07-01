@@ -1,9 +1,11 @@
 package io.github.youthred.ciallo;
 
 import cn.hutool.core.util.ClassUtil;
+import cn.hutool.db.ds.DSFactory;
 import io.github.youthred.ciallo.annotation.Ciallo;
 import io.github.youthred.ciallo.aop.CialloInterceptor;
-import io.github.youthred.ciallo.prop.CialloProp;
+import io.github.youthred.ciallo.properties.CialloProperty;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.aop.aspectj.AspectJExpressionPointcut;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
@@ -13,15 +15,29 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
+import java.util.Objects;
+
 /**
  * @author https://github.com/youthred
  */
 @Configuration
-@EnableConfigurationProperties(CialloProp.class)
+@EnableConfigurationProperties(CialloProperty.class)
 @ConditionalOnProperty(value = "ciallo.enable", havingValue = "true")
 @Slf4j
 @Import(cn.hutool.extra.spring.SpringUtil.class)
+@RequiredArgsConstructor
 public class CialloConfiguration {
+
+    private final CialloProperty cialloProperty;
+
+    @Bean
+    public void init() {
+        if (Objects.isNull(cialloProperty.getDb())) {
+            log.error("[Ciallo] Properties 'ciallo.db' is null");
+            return;
+        }
+        DSFactory.setCurrentDSFactory(DSFactory.create(cialloProperty.getDb().getSetting()));
+    }
 
     @Bean
     public DefaultPointcutAdvisor cialloPointcutAdvisor() {
