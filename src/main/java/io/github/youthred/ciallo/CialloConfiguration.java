@@ -22,7 +22,7 @@ import java.util.Objects;
  */
 @Configuration
 @EnableConfigurationProperties(CialloProperty.class)
-@ConditionalOnProperty(value = "ciallo.enable", havingValue = "true")
+@ConditionalOnProperty(value = "ciallo.enable", havingValue = "true", matchIfMissing = true)
 @Slf4j
 @Import(cn.hutool.extra.spring.SpringUtil.class)
 @RequiredArgsConstructor

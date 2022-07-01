@@ -25,17 +25,17 @@ public class DbProperty {
     /**
      * 是否在日志中显示执行的SQL
      */
-    public boolean showSql = false;
+    public Boolean showSql = false;
 
     /**
      * 是否格式化显示SQL
      */
-    public boolean formatSql = false;
+    public Boolean formatSql = false;
 
     /**
      * 是否显示SQL参数
      */
-    public boolean showParams = false;
+    public Boolean showParams = false;
 
     /**
      * 打印SQL的日志等级，默认debug

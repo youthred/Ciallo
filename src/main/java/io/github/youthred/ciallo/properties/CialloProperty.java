@@ -22,13 +22,13 @@ public class CialloProperty {
      * 开启切片
      */
     @NotNull
-    private boolean enable = true;
+    private Boolean enable = true;
 
     /**
      * 入库日志
      */
     @NotNull
-    private boolean saveLog = true;
+    private Boolean saveLog = true;
 
     /**
      * 日志表名称
