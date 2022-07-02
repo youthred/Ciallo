@@ -50,6 +50,38 @@ ciallo:
     # sql-level: debug # 是否在日志中显示执行的SQL 默认debug
 ```
 
+### 注解 Ciallo
+
+- 现仅支持用于注解方法
+
+``` java
+package io.github.youthred.ciallo.annotation;
+
+import java.lang.annotation.*;
+
+/**
+ * @author https://github.com/youthred
+ */
+@Documented
+@Target({ElementType.METHOD})
+@Retention(RetentionPolicy.RUNTIME)
+public @interface Ciallo {
+
+    /**
+     * 方法名称
+     * @return String
+     */
+    String value() default "";
+
+    /**
+     * 是否属于HTTP接口调用
+     * 
+     * @return 默认true
+     */
+    boolean servlet() default true;
+}
+```
+
 ### 默认入库信息
 
 ![Ciallog](doc/ciallog.png)
