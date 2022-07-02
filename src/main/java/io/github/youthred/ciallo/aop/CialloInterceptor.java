@@ -4,6 +4,7 @@ import cn.hutool.extra.spring.SpringUtil;
 import io.github.youthred.ciallo.annotation.Ciallo;
 import io.github.youthred.ciallo.pojo.Log;
 import io.github.youthred.ciallo.service.DbService;
+import io.github.youthred.ciallo.service.LogInterceptor;
 import io.github.youthred.ciallo.util.ContextHolderUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aopalliance.intercept.MethodInterceptor;

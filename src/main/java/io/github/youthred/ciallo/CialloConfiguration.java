@@ -4,12 +4,10 @@ import cn.hutool.core.util.ClassUtil;
 import cn.hutool.db.ds.DSFactory;
 import io.github.youthred.ciallo.annotation.Ciallo;
 import io.github.youthred.ciallo.aop.CialloInterceptor;
-import io.github.youthred.ciallo.aop.LogInterceptor;
-import io.github.youthred.ciallo.pojo.Log;
 import io.github.youthred.ciallo.properties.CialloProperty;
+import io.github.youthred.ciallo.service.LogInterceptor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.aopalliance.intercept.MethodInvocation;
 import org.springframework.aop.aspectj.AspectJExpressionPointcut;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -57,11 +55,6 @@ public class CialloConfiguration {
     @Bean
     @ConditionalOnMissingBean
     public LogInterceptor logInterceptor() {
-        return new LogInterceptor() {
-            @Override
-            public Log log(Log log, Ciallo ciallo, MethodInvocation invocation) {
-                return LogInterceptor.super.log(log, ciallo, invocation);
-            }
-        };
+        return (log, ciallo, invocation) -> log;
     }
 }
