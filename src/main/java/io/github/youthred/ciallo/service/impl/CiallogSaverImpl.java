@@ -8,6 +8,8 @@ import io.github.youthred.ciallo.service.DbService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
+import java.sql.SQLException;
+
 /**
  * 默认日志持久化实现
  *
@@ -30,8 +32,7 @@ public class CiallogSaverImpl implements CiallogSaver {
             try {
                 Ciallog ciallog = (Ciallog) o;
                 Db.use().insert(ciallog.toEntity());
-                log.info(Constant.LOG_NAME_HEAD + "SAVED");
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 log.error(Constant.LOG_NAME_HEAD + "Ciallog save failed: {}", ExceptionUtils.getStackTrace(e));
             }
         } else {
