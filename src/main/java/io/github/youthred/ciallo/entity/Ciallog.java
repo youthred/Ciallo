@@ -16,6 +16,9 @@ import java.sql.Timestamp;
 @Accessors(chain = true)
 public class Ciallog {
 
+    /**
+     * Primary Key Snowflake
+     */
     private Long id;
 
     /**
@@ -59,12 +62,12 @@ public class Ciallog {
     private String servletPath;
 
     /**
-     * 入参
+     * 入参 JSON字符串
      */
     private String req;
 
     /**
-     * 出参
+     * 出参 JSON字符串 (可能过大，请实现io.github.youthred.ciallo.service.CiallogInterceptor以自定义实体)
      */
     private String res;
 

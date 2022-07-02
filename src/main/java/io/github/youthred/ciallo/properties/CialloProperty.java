@@ -29,7 +29,7 @@ public class CialloProperty {
     private Boolean saveLog = true;
 
     /**
-     * 日志表名称
+     * 日志持久化库表名称
      */
     @NotBlank
     private String logTableName = "T_CIALLOG";
