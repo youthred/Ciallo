@@ -45,7 +45,7 @@ public class CialloConfiguration {
                 log.error(Constant.LOG_NAME_HEAD + "Properties 'ciallo.db' is null");
                 return;
             }
-            DSFactory.setCurrentDSFactory(DSFactory.create(cialloProperty.getDs().getSetting()));
+            DSFactory.setCurrentDSFactory(DSFactory.create(cialloProperty.getDs().buildSetting()));
         }
     }
 

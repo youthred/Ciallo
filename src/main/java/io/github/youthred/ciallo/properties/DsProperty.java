@@ -42,7 +42,7 @@ public class DsProperty {
      */
     public String sqlLevel = "debug";
 
-    public Setting getSetting() {
+    public Setting buildSetting() {
         Setting setting = new Setting();
         setting.set("driver", this.driverClassName);
         setting.set("url", this.url);
