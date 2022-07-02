@@ -4,14 +4,12 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
-import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-@Component
 @ConfigurationProperties(prefix = "ciallo")
 @Data
 @Accessors(chain = true)
@@ -19,13 +17,13 @@ import javax.validation.constraints.NotNull;
 public class CialloProperty {
 
     /**
-     * 开启切片
+     * 启用Ciallo
      */
     @NotNull
     private Boolean enable = true;
 
     /**
-     * 入库日志
+     * 启用日志入库
      */
     @NotNull
     private Boolean saveLog = true;
