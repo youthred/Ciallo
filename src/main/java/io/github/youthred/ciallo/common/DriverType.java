@@ -2,7 +2,6 @@ package io.github.youthred.ciallo.common;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;
 import java.util.List;
@@ -24,7 +23,7 @@ public enum DriverType {
 
     public static String parseCreatIfNotExistCondition(String driverClassName) {
         return Arrays.stream(values())
-                .filter(driverType -> StringUtils.equals(driverType.lowerCaseName, driverClassName.toLowerCase()))
+                .filter(dt -> driverClassName.toLowerCase().contains(dt.lowerCaseName))
                 .findFirst()
                 .map(DriverType::getCreatIfNotExistCondition)
                 .orElse(null);
@@ -32,7 +31,7 @@ public enum DriverType {
 
     public static List<String> parseCreateSql(String driverClassName) {
         return Arrays.stream(values())
-                .filter(driverType -> StringUtils.equals(driverType.lowerCaseName, driverClassName.toLowerCase()))
+                .filter(dt -> driverClassName.toLowerCase().contains(dt.lowerCaseName))
                 .findFirst()
                 .map(DriverType::getCreateSql)
                 .orElse(null);

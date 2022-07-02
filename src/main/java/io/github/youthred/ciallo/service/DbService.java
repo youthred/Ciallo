@@ -1,6 +1,5 @@
 package io.github.youthred.ciallo.service;
 
-import cn.hutool.core.util.StrUtil;
 import cn.hutool.db.Db;
 import cn.hutool.extra.spring.SpringUtil;
 import io.github.youthred.ciallo.common.Constant;
@@ -8,6 +7,7 @@ import io.github.youthred.ciallo.common.DriverType;
 import io.github.youthred.ciallo.properties.CialloProperty;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
@@ -22,10 +22,16 @@ public class DbService {
      * 默认Saver表检查
      */
     public static void creatIfNotExist() {
+        log.info(Constant.LOG_NAME_HEAD + "Check table exists...");
         CialloProperty cp = SpringUtil.getBean(CialloProperty.class);
         Validate.isTrue(Objects.nonNull(cp.getDs()), Constant.LOG_NAME_HEAD + "Datasource properties can not be null");
         try {
-            Db.use().query(StrUtil.format("select count(0) as cnt from {} {}", SpringUtil.getBean(CialloProperty.class).getLogTableName(), DriverType.parseCreatIfNotExistCondition(cp.getDs().getDriverClassName())));
+            String querySql = "select count(0) as cnt from " + cp.getLogTableName();
+            String condition = DriverType.parseCreatIfNotExistCondition(cp.getDs().getDriverClassName());
+            if (StringUtils.isNotBlank(condition)) {
+                querySql = querySql + " " + condition;
+            }
+            Db.use().query(querySql);
         } catch (SQLException queryE) {
             log.error(Constant.LOG_NAME_HEAD + "Table check failed: {}", ExceptionUtils.getStackTrace(queryE));
             try {
@@ -37,7 +43,7 @@ public class DbService {
                     }
                 }
             } catch (SQLException createE) {
-                log.error(Constant.LOG_NAME_HEAD + "Create table '{}' failed", cp.getLogTableName());
+                log.error(Constant.LOG_NAME_HEAD + "Create table '{}' failed: {}", cp.getLogTableName(), ExceptionUtils.getStackTrace(createE));
             }
         }
     }

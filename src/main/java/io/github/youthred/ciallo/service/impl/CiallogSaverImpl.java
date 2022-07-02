@@ -16,7 +16,6 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 public class CiallogSaverImpl implements CiallogSaver {
 
     static {
-        log.info(Constant.LOG_NAME_HEAD + "Check table exists...");
         try {
             DbService.creatIfNotExist();
         } catch (Exception e) {
