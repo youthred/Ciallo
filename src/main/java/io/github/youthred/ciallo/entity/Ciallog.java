@@ -1,8 +1,13 @@
 package io.github.youthred.ciallo.entity;
 
+import cn.hutool.core.util.IdUtil;
+import cn.hutool.db.Entity;
+import cn.hutool.extra.spring.SpringUtil;
+import io.github.youthred.ciallo.properties.CialloProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 /**
@@ -58,4 +63,18 @@ public class Ciallog {
      * 出参
      */
     private String res;
+
+    public Entity toEntity() {
+        return Entity.create(SpringUtil.getBean(CialloProperty.class).getLogTableName())
+                .set("id", IdUtil.getSnowflakeNextId())
+                .set("logger", this.logger)
+                .set("log_time", new Timestamp(System.currentTimeMillis()))
+                .set("time_take", this.timeTake)
+                .set("servlet", this.servlet)
+                .set("ip", this.ip)
+                .set("request_method", this.requestMethod)
+                .set("servlet_path", this.servletPath)
+                .set("req", this.req)
+                .set("res", this.res);
+    }
 }

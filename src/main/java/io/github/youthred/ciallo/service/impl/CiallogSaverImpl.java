@@ -1,5 +1,6 @@
 package io.github.youthred.ciallo.service.impl;
 
+import cn.hutool.db.Db;
 import io.github.youthred.ciallo.common.Constant;
 import io.github.youthred.ciallo.entity.Ciallog;
 import io.github.youthred.ciallo.service.CiallogSaver;
@@ -28,6 +29,7 @@ public class CiallogSaverImpl implements CiallogSaver {
         if (o instanceof Ciallog) {
             try {
                 Ciallog ciallog = (Ciallog) o;
+                Db.use().insert(ciallog.toEntity());
                 log.info(Constant.LOG_NAME_HEAD + "SAVED");
             } catch (Exception e) {
                 log.error(Constant.LOG_NAME_HEAD + "Ciallog save failed: {}", ExceptionUtils.getStackTrace(e));

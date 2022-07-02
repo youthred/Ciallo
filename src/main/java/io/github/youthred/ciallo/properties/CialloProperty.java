@@ -32,7 +32,7 @@ public class CialloProperty {
      * 日志表名称
      */
     @NotBlank
-    private String logTableName = "T_CIALLO_LOG";
+    private String logTableName = "T_CIALLOG";
 
     /**
      * 数据源信息
