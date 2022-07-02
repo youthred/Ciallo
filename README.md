@@ -1,3 +1,3 @@
 # Ciallo ~ ⭐
 
-切片缝合怪
+> 方法切片信息打印及持久化的 Springboot starter
