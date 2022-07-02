@@ -1,4 +1,4 @@
-package io.github.youthred.ciallo.pojo;
+package io.github.youthred.ciallo.entity;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @Accessors(chain = true)
-public class Log {
+public class Ciallog {
 
     private Long id;
 

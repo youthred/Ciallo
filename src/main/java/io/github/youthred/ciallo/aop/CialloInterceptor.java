@@ -2,9 +2,9 @@ package io.github.youthred.ciallo.aop;
 
 import cn.hutool.extra.spring.SpringUtil;
 import io.github.youthred.ciallo.annotation.Ciallo;
-import io.github.youthred.ciallo.pojo.Log;
-import io.github.youthred.ciallo.service.DbService;
-import io.github.youthred.ciallo.service.LogInterceptor;
+import io.github.youthred.ciallo.entity.Ciallog;
+import io.github.youthred.ciallo.service.CiallogInterceptor;
+import io.github.youthred.ciallo.service.CiallogSaver;
 import io.github.youthred.ciallo.util.ContextHolderUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aopalliance.intercept.MethodInterceptor;
@@ -28,8 +28,8 @@ public class CialloInterceptor implements MethodInterceptor {
             String servletPath = request.getServletPath();
             log.info(servletPath);
         }
-        DbService.check();
-        Log log = SpringUtil.getBean(LogInterceptor.class).log(new Log(), ciallo, invocation);
+        Object ciallog = SpringUtil.getBean(CiallogInterceptor.class).ciallog(new Ciallog(), ciallo, invocation);
+        SpringUtil.getBean(CiallogSaver.class).save(ciallog);
         return invocation.proceed();
     }
 }
