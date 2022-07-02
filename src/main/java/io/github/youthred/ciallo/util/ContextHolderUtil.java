@@ -1,5 +1,6 @@
 package io.github.youthred.ciallo.util;
 
+import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -12,6 +13,10 @@ import java.util.Objects;
 public class ContextHolderUtil {
 
     public static HttpServletRequest getCurrentHttpServletRequest() {
-        return ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
+        RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
+        if (Objects.nonNull(requestAttributes)) {
+            return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        }
+        return null;
     }
 }

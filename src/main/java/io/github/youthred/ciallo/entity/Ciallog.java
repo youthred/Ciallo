@@ -8,7 +8,6 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 /**
  * @author https://github.com/youthred
@@ -25,9 +24,14 @@ public class Ciallog {
     private String logger;
 
     /**
+     * 名称
+     */
+    private String name;
+
+    /**
      * 触发时间
      */
-    public LocalDateTime logTime;
+    public Long logTime;
 
     /**
      * 耗时 millis
@@ -37,7 +41,7 @@ public class Ciallog {
     /**
      * 是否Http接口
      */
-    private boolean servlet;
+    private Boolean servlet;
 
     /**
      * 请求IP
@@ -68,7 +72,8 @@ public class Ciallog {
         return Entity.create(SpringUtil.getBean(CialloProperty.class).getLogTableName())
                 .set("id", IdUtil.getSnowflakeNextId())
                 .set("logger", this.logger)
-                .set("log_time", new Timestamp(System.currentTimeMillis()))
+                .set("name", this.name)
+                .set("log_time", new Timestamp(this.logTime))
                 .set("time_take", this.timeTake)
                 .set("servlet", this.servlet)
                 .set("ip", this.ip)
