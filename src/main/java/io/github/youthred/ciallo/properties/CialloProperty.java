@@ -41,5 +41,5 @@ public class CialloProperty {
      */
     @NestedConfigurationProperty
     @Valid
-    private DbProperty db;
+    private DsProperty ds;
 }

@@ -11,7 +11,7 @@ import javax.validation.constraints.NotBlank;
  */
 @Data
 @Accessors(chain = true)
-public class DbProperty {
+public class DsProperty {
 
     @NotBlank
     private String driverClassName;
