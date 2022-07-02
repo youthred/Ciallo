@@ -7,12 +7,14 @@ import cn.hutool.json.JSONUtil;
 import io.github.youthred.ciallo.annotation.Ciallo;
 import io.github.youthred.ciallo.common.Constant;
 import io.github.youthred.ciallo.entity.Ciallog;
+import io.github.youthred.ciallo.properties.CialloProperty;
 import io.github.youthred.ciallo.service.CiallogInterceptor;
 import io.github.youthred.ciallo.service.CiallogSaver;
 import io.github.youthred.ciallo.util.ContextHolderUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.DefaultParameterNameDiscoverer;
 import org.springframework.core.ParameterNameDiscoverer;
 import org.springframework.stereotype.Component;
@@ -54,7 +56,14 @@ public class CialloMethodInterceptor implements MethodInterceptor {
         if (ciallo.servlet()) {
             HttpServletRequest request = ContextHolderUtil.getCurrentHttpServletRequest();
             if (Objects.nonNull(request)) {
-                ciallog.setIp(ServletUtil.getClientIP(request))
+                String realIpHeader = SpringUtil.getBean(CialloProperty.class).getRealIpHeader();
+                String ip;
+                if (StringUtils.isNotBlank(realIpHeader)) {
+                    ip = ServletUtil.getClientIPByHeader(request, realIpHeader);
+                } else {
+                    ip = ServletUtil.getClientIP(request);
+                }
+                ciallog.setIp(ip)
                         .setRequestMethod(request.getMethod())
                         .setServletPath(request.getServletPath());
                 String servletPath = request.getServletPath();

@@ -35,6 +35,11 @@ public class CialloProperty {
     private String logTableName = "T_CIALLOG";
 
     /**
+     * 使用Nginx代理时的真实 IP Header 名称
+     */
+    private String realIpHeader;
+
+    /**
      * 数据源信息
      */
     @NestedConfigurationProperty
