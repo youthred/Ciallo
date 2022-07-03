@@ -72,7 +72,7 @@ public class Ciallog {
     private String res;
 
     public Entity toEntity() {
-        return Entity.create(SpringUtil.getBean(CialloProperty.class).getLogTableName())
+        return Entity.create(SpringUtil.getBean(CialloProperty.class).getCiallogTableName())
                 .set("id", IdUtil.getSnowflakeNextId())
                 .set("logger", this.logger)
                 .set("name", this.name)

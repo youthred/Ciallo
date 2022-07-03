@@ -32,7 +32,7 @@ public class CialloProperty {
      * 日志持久化库表名称
      */
     @NotBlank
-    private String logTableName = "T_CIALLOG";
+    private String ciallogTableName = "T_CIALLOG";
 
     /**
      * 使用Nginx代理时的真实 IP Header 名称

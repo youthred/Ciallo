@@ -1,10 +1,10 @@
 package io.github.youthred.ciallo.common;
 
+import cn.hutool.core.exceptions.ValidateException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * @author https://github.com/youthred
@@ -19,21 +19,21 @@ public enum DriverType {
 
     final private String lowerCaseName;
     final private String creatIfNotExistCondition;
-    final private List<String> createSql;
+    final private String createSql;
 
     public static String parseCreatIfNotExistCondition(String driverClassName) {
         return Arrays.stream(values())
                 .filter(dt -> driverClassName.toLowerCase().contains(dt.lowerCaseName))
                 .findFirst()
                 .map(DriverType::getCreatIfNotExistCondition)
-                .orElse(null);
+                .orElseThrow(() -> new ValidateException(Constant.LOG_NAME_HEAD + "unsupported driver '" + driverClassName + "'"));
     }
 
-    public static List<String> parseCreateSql(String driverClassName) {
+    public static String parseCreateSql(String driverClassName) {
         return Arrays.stream(values())
                 .filter(dt -> driverClassName.toLowerCase().contains(dt.lowerCaseName))
                 .findFirst()
                 .map(DriverType::getCreateSql)
-                .orElse(null);
+                .orElseThrow(() -> new ValidateException(Constant.LOG_NAME_HEAD + "unsupported driver '" + driverClassName + "'"));
     }
 }
