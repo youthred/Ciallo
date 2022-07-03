@@ -12,6 +12,7 @@ public class Constant {
             "CREATE TABLE `" + SpringUtil.getBean(CialloProperty.class).getCiallogTableName() + "` (\n" +
                     "  `id` bigint NOT NULL,\n" +
                     "  `logger` varchar(128) DEFAULT NULL COMMENT '完全限定名',\n" +
+                    "  `name` varchar(255) DEFAULT NULL COMMENT '方法名称',\n" +
                     "  `log_time` datetime DEFAULT NULL COMMENT '触发时间',\n" +
                     "  `time_take` bigint DEFAULT NULL COMMENT '耗时 millis',\n" +
                     "  `servlet` bit(1) DEFAULT NULL COMMENT '是否Http接口 1是 0否',\n" +
@@ -27,6 +28,7 @@ public class Constant {
                     "(\n" +
                     "    `id`             number primary key,\n" +
                     "    `logger`         varchar2(128),\n" +
+                    "    `name`           varchar2(255),\n" +
                     "    `log_time`       data,\n" +
                     "    `time_take`      number,\n" +
                     "    `servlet`        byte(1),\n" +

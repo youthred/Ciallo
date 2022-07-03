@@ -2,6 +2,7 @@ CREATE TABLE `t_ciallog`
 (
     `id`             bigint NOT NULL,
     `logger`         varchar(128)  DEFAULT NULL COMMENT '完全限定名',
+    `name`           varchar(255)  DEFAULT NULL COMMENT '方法名称',
     `log_time`       datetime      DEFAULT NULL COMMENT '触发时间',
     `time_take`      bigint        DEFAULT NULL COMMENT '耗时 millis',
     `servlet`        bit(1)        DEFAULT NULL COMMENT '是否Http接口 1是 0否',

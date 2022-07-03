@@ -27,7 +27,7 @@ public class Ciallog {
     private String logger;
 
     /**
-     * 名称
+     * 方法名称
      */
     private String name;
 
