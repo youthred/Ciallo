@@ -84,7 +84,7 @@ public @interface Ciallo {
 
 ### 默认入库信息
 
-![Ciallog](doc/ciallog.png)
+![Ciallog](doc/t-ciallog.png)
 
 ### 自定义实现
 
