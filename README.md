@@ -69,6 +69,7 @@ public @interface Ciallo {
 
     /**
      * 方法名称
+     *
      * @return String
      */
     String value() default "";
@@ -114,6 +115,7 @@ public class MyCiallogInterceptor implements CiallogInterceptor {
      */
     @Override
     public Object ciallog(Ciallog ciallog, Ciallo ciallo, MethodInvocation invocation) {
+
         /*
          * 若返回类型不是 io.github.youthred.ciallo.entity.Ciallog, 并且需要持久化
          * 则需实现 io.github.youthred.ciallo.service.CiallogSaver 以自定义处理
@@ -141,6 +143,7 @@ public class MyCiallogSaver implements CiallogSaver {
 
     @Override
     public void save(Object o) {
+
         // 或者是自定义 CiallogInterceptor 的返回体
         Ciallog ciallog = (Ciallog) o;
         // todo
