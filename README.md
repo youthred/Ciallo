@@ -37,7 +37,7 @@
 ciallo:
   # enable: true # 启用Ciallo 默认true
   # save-log: true # 启用日志入库 默认true
-  # log-table-name: T_CIALLOG # 日志持久化库表名称 默认T_CIALLOG
+  # ciallog-table-name: T_CIALLOG # 日志持久化库表名称 默认T_CIALLOG
   # real-ip-header: ? # 使用Nginx代理时的真实IPHeader名称 无默认 非必填
   ds: # 数据源信息
     driver-class-name: ${spring.datasource.dynamic.datasource.master.driver-class-name} # 必填
