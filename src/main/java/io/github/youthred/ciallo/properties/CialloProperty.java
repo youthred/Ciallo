@@ -35,6 +35,12 @@ public class CialloProperty {
     private String ciallogTableName = "T_CIALLOG";
 
     /**
+     * 检查库表是否能正常使用
+     */
+    @NotNull
+    private Boolean checkTable = true;
+
+    /**
      * 使用Nginx代理时的真实 IP Header 名称
      */
     private String realIpHeader;
