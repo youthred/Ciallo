@@ -1,5 +1,6 @@
 package io.github.youthred.ciallo.aop;
 
+import cn.hutool.core.exceptions.ExceptionUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.extra.servlet.ServletUtil;
 import cn.hutool.extra.spring.SpringUtil;
@@ -42,42 +43,46 @@ public class CialloMethodInterceptor implements MethodInterceptor {
         Object proceed = invocation.proceed();
         sw.stop();
 
-        Method method = invocation.getMethod();
-        Ciallo ciallo = method.getDeclaredAnnotation(Ciallo.class);
-        Ciallog ciallog = new Ciallog()
-                .setId(IdUtil.getSnowflakeNextId())
-                .setLogger(method.getDeclaringClass().getName() + "#" + method.getName())
-                .setName(ciallo.value())
-                .setLogTime(System.currentTimeMillis())
-                .setTimeTake(sw.getLastTaskTimeMillis())
-                .setServlet(ciallo.servlet())
-                .setReq(this.parseReqJsonStr(method.getParameterTypes(), PND.getParameterNames(method), invocation.getArguments()))
-                .setRes(JSONUtil.toJsonStr(proceed));
-        if (ciallo.servlet()) {
-            HttpServletRequest request = ContextHolderUtil.getCurrentHttpServletRequest();
-            if (Objects.nonNull(request)) {
-                String realIpHeader = SpringUtil.getBean(CialloProperty.class).getRealIpHeader();
-                String ip;
-                if (StringUtils.isNotBlank(realIpHeader)) {
-                    ip = ServletUtil.getClientIPByHeader(request, realIpHeader);
+        try {
+            Method method = invocation.getMethod();
+            Ciallo ciallo = method.getDeclaredAnnotation(Ciallo.class);
+            Ciallog ciallog = new Ciallog()
+                    .setId(IdUtil.getSnowflakeNextId())
+                    .setLogger(method.getDeclaringClass().getName() + "#" + method.getName())
+                    .setName(ciallo.value())
+                    .setLogTime(System.currentTimeMillis())
+                    .setTimeTake(sw.getLastTaskTimeMillis())
+                    .setServlet(ciallo.servlet())
+                    .setReq(this.parseReqJsonStr(method.getParameterTypes(), PND.getParameterNames(method), invocation.getArguments()))
+                    .setRes(JSONUtil.toJsonStr(proceed));
+            if (ciallo.servlet()) {
+                HttpServletRequest request = ContextHolderUtil.getCurrentHttpServletRequest();
+                if (Objects.nonNull(request)) {
+                    String realIpHeader = SpringUtil.getBean(CialloProperty.class).getRealIpHeader();
+                    String ip;
+                    if (StringUtils.isNotBlank(realIpHeader)) {
+                        ip = ServletUtil.getClientIPByHeader(request, realIpHeader);
+                    } else {
+                        ip = ServletUtil.getClientIP(request);
+                    }
+                    ciallog.setIp(ip)
+                            .setRequestMethod(request.getMethod())
+                            .setServletPath(request.getServletPath());
+                    String servletPath = request.getServletPath();
+                    log.info(servletPath);
                 } else {
-                    ip = ServletUtil.getClientIP(request);
+                    log.warn(Constant.LOG_NAME_HEAD + "Current 'HttpServletRequest' is null");
                 }
-                ciallog.setIp(ip)
-                        .setRequestMethod(request.getMethod())
-                        .setServletPath(request.getServletPath());
-                String servletPath = request.getServletPath();
-                log.info(servletPath);
-            } else {
-                log.warn(Constant.LOG_NAME_HEAD + "Current 'HttpServletRequest' is null");
             }
+            Object o = SpringUtil.getBean(CiallogInterceptor.class).ciallog(
+                    ciallog,
+                    ciallo,
+                    invocation
+            );
+            SpringUtil.getBean(CiallogSaver.class).save(o);
+        } catch (Exception e) {
+            log.error(Constant.LOG_NAME_HEAD + "CialloMethodInterceptor err: {}", ExceptionUtil.getSimpleMessage(e));
         }
-        Object o = SpringUtil.getBean(CiallogInterceptor.class).ciallog(
-                ciallog,
-                ciallo,
-                invocation
-        );
-        SpringUtil.getBean(CiallogSaver.class).save(o);
         return proceed;
     }
 
