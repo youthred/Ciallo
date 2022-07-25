@@ -13,7 +13,7 @@ import org.aopalliance.intercept.MethodInvocation;
 public class CiallogInterceptorImpl implements CiallogInterceptor {
 
     @Override
-    public Object ciallog(Ciallog ciallog, Ciallo ciallo, MethodInvocation invocation) {
+    public Object ciallog(Ciallog ciallog, Ciallo ciallo, MethodInvocation invocation, Object proceed) {
         return ciallog;
     }
 }

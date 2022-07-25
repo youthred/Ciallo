@@ -3,7 +3,7 @@ package io.github.youthred.ciallo.common;
 import cn.hutool.extra.spring.SpringUtil;
 import io.github.youthred.ciallo.properties.CialloProperty;
 
-public class Constant {
+public class CialloConstant {
 
     public static final String LOG_NAME = "[Ciallo]";
     public static final String LOG_NAME_HEAD = "[Ciallo] ";

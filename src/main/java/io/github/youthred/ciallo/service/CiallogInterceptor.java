@@ -18,7 +18,8 @@ public interface CiallogInterceptor {
      * @param ciallog    默认实体
      * @param ciallo     Ciallo注解
      * @param invocation MethodInvocation
+     * @param proceed    methods return object
      * @return Ciallog
      */
-    Object ciallog(Ciallog ciallog, Ciallo ciallo, MethodInvocation invocation);
+    Object ciallog(Ciallog ciallog, Ciallo ciallo, MethodInvocation invocation, Object proceed);
 }

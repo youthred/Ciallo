@@ -4,7 +4,7 @@ import cn.hutool.core.util.ClassUtil;
 import cn.hutool.db.ds.DSFactory;
 import io.github.youthred.ciallo.annotation.Ciallo;
 import io.github.youthred.ciallo.aop.CialloMethodInterceptor;
-import io.github.youthred.ciallo.common.Constant;
+import io.github.youthred.ciallo.common.CialloConstant;
 import io.github.youthred.ciallo.properties.CialloProperty;
 import io.github.youthred.ciallo.service.CiallogInterceptor;
 import io.github.youthred.ciallo.service.CiallogSaver;
@@ -39,10 +39,10 @@ public class CialloConfiguration {
         init();
     }
 
-    public void init() {
+    private void init() {
         if (cialloProperty.getSaveLog()) {
             if (Objects.isNull(cialloProperty.getDs())) {
-                log.error(Constant.LOG_NAME_HEAD + "Properties 'ciallo.db' is null");
+                log.error(CialloConstant.LOG_NAME_HEAD + "Properties 'ciallo.db' is null");
                 return;
             }
             DSFactory.setCurrentDSFactory(DSFactory.create(cialloProperty.getDs().buildSetting()));
@@ -56,7 +56,7 @@ public class CialloConfiguration {
         DefaultPointcutAdvisor advisor = new DefaultPointcutAdvisor();
         advisor.setPointcut(pointcut);
         advisor.setAdvice(new CialloMethodInterceptor());
-        log.info(Constant.LOG_NAME_HEAD + "CialloAop loaded.");
+        log.info(CialloConstant.LOG_NAME_HEAD + "CialloAop loaded.");
         return advisor;
     }
 

@@ -6,7 +6,7 @@ import cn.hutool.extra.servlet.ServletUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import cn.hutool.json.JSONUtil;
 import io.github.youthred.ciallo.annotation.Ciallo;
-import io.github.youthred.ciallo.common.Constant;
+import io.github.youthred.ciallo.common.CialloConstant;
 import io.github.youthred.ciallo.entity.Ciallog;
 import io.github.youthred.ciallo.properties.CialloProperty;
 import io.github.youthred.ciallo.service.CiallogInterceptor;
@@ -42,7 +42,11 @@ public class CialloMethodInterceptor implements MethodInterceptor {
         sw.start();
         Object proceed = invocation.proceed();
         sw.stop();
+        aop(invocation, sw, proceed);
+        return proceed;
+    }
 
+    private void aop(MethodInvocation invocation, StopWatch sw, Object proceed) {
         try {
             Method method = invocation.getMethod();
             Ciallo ciallo = method.getDeclaredAnnotation(Ciallo.class);
@@ -71,19 +75,19 @@ public class CialloMethodInterceptor implements MethodInterceptor {
                     String servletPath = request.getServletPath();
                     log.info(servletPath);
                 } else {
-                    log.warn(Constant.LOG_NAME_HEAD + "Current 'HttpServletRequest' is null");
+                    log.warn(CialloConstant.LOG_NAME_HEAD + "Current 'HttpServletRequest' is null");
                 }
             }
             Object o = SpringUtil.getBean(CiallogInterceptor.class).ciallog(
                     ciallog,
                     ciallo,
-                    invocation
+                    invocation,
+                    proceed
             );
             SpringUtil.getBean(CiallogSaver.class).save(o);
         } catch (Exception e) {
-            log.error(Constant.LOG_NAME_HEAD + "CialloMethodInterceptor err: {}", ExceptionUtil.getSimpleMessage(e));
+            log.error(CialloConstant.LOG_NAME_HEAD + "CialloMethodInterceptor err: {}", ExceptionUtil.getSimpleMessage(e));
         }
-        return proceed;
     }
 
     private String parseReqJsonStr(Class<?>[] parameterTypes, String[] parameterNames, Object[] parameterArgs) {

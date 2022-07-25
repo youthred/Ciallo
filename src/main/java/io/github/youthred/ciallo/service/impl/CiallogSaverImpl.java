@@ -2,7 +2,7 @@ package io.github.youthred.ciallo.service.impl;
 
 import cn.hutool.db.Db;
 import cn.hutool.extra.spring.SpringUtil;
-import io.github.youthred.ciallo.common.Constant;
+import io.github.youthred.ciallo.common.CialloConstant;
 import io.github.youthred.ciallo.entity.Ciallog;
 import io.github.youthred.ciallo.properties.CialloProperty;
 import io.github.youthred.ciallo.service.CiallogSaver;
@@ -38,10 +38,10 @@ public class CiallogSaverImpl implements CiallogSaver {
                     Ciallog ciallog = (Ciallog) o;
                     Db.use().insert(ciallog.toEntity());
                 } catch (SQLException e) {
-                    log.error(Constant.LOG_NAME_HEAD + "Ciallog save failed: {}", ExceptionUtils.getStackTrace(e));
+                    log.error(CialloConstant.LOG_NAME_HEAD + "Ciallog save failed: {}", ExceptionUtils.getStackTrace(e));
                 }
             } else {
-                log.warn(Constant.LOG_NAME_HEAD + "You implemented and Spring componentized your own 'CiallogInterceptor' and returned an object of another type, the default 'CiallogSaver' cannot handle objects other than 'io.github.youthred.ciallo.entity.Ciallog', please implement and Spring componentized' CiallogSaver' to custom handle logs");
+                log.warn(CialloConstant.LOG_NAME_HEAD + "You implemented and Spring componentized your own 'CiallogInterceptor' and returned an object of another type, the default 'CiallogSaver' cannot handle objects other than 'io.github.youthred.ciallo.entity.Ciallog', please implement and Spring componentized' CiallogSaver' to custom handle logs");
             }
         }
     }
